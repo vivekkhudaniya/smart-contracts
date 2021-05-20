@@ -33,6 +33,9 @@ describe("MyContract_Upgradeable", async () => {
   it("retrieve returns a value previously initialized", async function () {
     // Test if the returned value is the same one
     // Note that we need to use strings to compare the 256 bit integers
+    await expect(myContract.initialize(45)).to.be.revertedWith(
+      "Already initialized"
+    );
     expect((await myContract.retrieve()).toString()).to.equal("42");
   });
 });

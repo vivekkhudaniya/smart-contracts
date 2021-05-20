@@ -48,8 +48,6 @@ describe("MyContract2_Upgradable", async () => {
     // Test if the returned value is the same one
     // Note that we need to use strings to compare the 256 bit integers
     expect((await myContract2.retrieve()).toString()).to.equal("44");
-
-    expect((await myContract2.age()).toString()).to.equal("26");
     await myContract2.returnDecreasedAge();
     expect((await myContract2.age()).toString()).to.equal("25");
   });
