@@ -5,10 +5,10 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 contract MyContract2  is Ownable ,ReentrancyGuard{
-    bool public isInitialized;
-    uint256 private value;
-    uint256 public age;
-    bool public isInitialized2;
+    bool internal isInitialized;
+    uint256 private  value;
+    uint256 public  age;
+    bool internal  isInitialized2;
     
     function initialize(uint256 newValue) public {
        require(!isInitialized,"Already initialized"); 

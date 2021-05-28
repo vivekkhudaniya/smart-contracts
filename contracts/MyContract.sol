@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "hardhat/console.sol";
 
 contract MyContract  is Ownable ,ReentrancyGuard{
-    bool public isInitialized;
+    bool internal isInitialized;
     uint256 private value;
 
  

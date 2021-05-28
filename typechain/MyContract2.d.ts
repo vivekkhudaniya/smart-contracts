@@ -26,8 +26,6 @@ interface MyContract2Interface extends ethers.utils.Interface {
     "increment()": FunctionFragment;
     "initialize(uint256)": FunctionFragment;
     "initializeV1(uint256)": FunctionFragment;
-    "isInitialized()": FunctionFragment;
-    "isInitialized2()": FunctionFragment;
     "owner()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
     "retrieve()": FunctionFragment;
@@ -48,14 +46,6 @@ interface MyContract2Interface extends ethers.utils.Interface {
   encodeFunctionData(
     functionFragment: "initializeV1",
     values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "isInitialized",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "isInitialized2",
-    values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
@@ -81,14 +71,6 @@ interface MyContract2Interface extends ethers.utils.Interface {
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "initializeV1",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "isInitialized",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "isInitialized2",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
@@ -197,14 +179,6 @@ export class MyContract2 extends Contract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    isInitialized(overrides?: CallOverrides): Promise<[boolean]>;
-
-    "isInitialized()"(overrides?: CallOverrides): Promise<[boolean]>;
-
-    isInitialized2(overrides?: CallOverrides): Promise<[boolean]>;
-
-    "isInitialized2()"(overrides?: CallOverrides): Promise<[boolean]>;
-
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     "owner()"(overrides?: CallOverrides): Promise<[string]>;
@@ -280,14 +254,6 @@ export class MyContract2 extends Contract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  isInitialized(overrides?: CallOverrides): Promise<boolean>;
-
-  "isInitialized()"(overrides?: CallOverrides): Promise<boolean>;
-
-  isInitialized2(overrides?: CallOverrides): Promise<boolean>;
-
-  "isInitialized2()"(overrides?: CallOverrides): Promise<boolean>;
-
   owner(overrides?: CallOverrides): Promise<string>;
 
   "owner()"(overrides?: CallOverrides): Promise<string>;
@@ -351,14 +317,6 @@ export class MyContract2 extends Contract {
       _age: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
-
-    isInitialized(overrides?: CallOverrides): Promise<boolean>;
-
-    "isInitialized()"(overrides?: CallOverrides): Promise<boolean>;
-
-    isInitialized2(overrides?: CallOverrides): Promise<boolean>;
-
-    "isInitialized2()"(overrides?: CallOverrides): Promise<boolean>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
@@ -438,14 +396,6 @@ export class MyContract2 extends Contract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    isInitialized(overrides?: CallOverrides): Promise<BigNumber>;
-
-    "isInitialized()"(overrides?: CallOverrides): Promise<BigNumber>;
-
-    isInitialized2(overrides?: CallOverrides): Promise<BigNumber>;
-
-    "isInitialized2()"(overrides?: CallOverrides): Promise<BigNumber>;
-
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     "owner()"(overrides?: CallOverrides): Promise<BigNumber>;
@@ -520,16 +470,6 @@ export class MyContract2 extends Contract {
     "initializeV1(uint256)"(
       _age: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    isInitialized(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    "isInitialized()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    isInitialized2(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    "isInitialized2()"(
-      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;

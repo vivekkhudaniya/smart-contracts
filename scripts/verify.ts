@@ -3,12 +3,11 @@ const hre = require("hardhat");
 async function main() {
   await hre.run("verify:verify", {
     //Deployed contract address
-    address: "0x071e9235B80DbA71e91e365b5b81f43C674cfD94",
+    address: "0xb9D3cc4b27f79dBC38b57ec01611418dFA1AAeA1",
     //Pass arguments as string and comma seprated values
     constructorArguments: [],
     //Path of your main contract.
-    contract:
-      "contracts/upgradeability/OwnedUpgradeabilityProxy.sol:OwnedUpgradeabilityProxy",
+    contract: "contracts/MyContract.sol:MyContract",
   });
 }
 

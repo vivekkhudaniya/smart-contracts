@@ -22,7 +22,6 @@ import { TypedEventFilter, TypedEvent, TypedListener } from "./commons";
 interface MyContractInterface extends ethers.utils.Interface {
   functions: {
     "initialize(uint256)": FunctionFragment;
-    "isInitialized()": FunctionFragment;
     "owner()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
     "retrieve()": FunctionFragment;
@@ -32,10 +31,6 @@ interface MyContractInterface extends ethers.utils.Interface {
   encodeFunctionData(
     functionFragment: "initialize",
     values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "isInitialized",
-    values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
@@ -49,10 +44,6 @@ interface MyContractInterface extends ethers.utils.Interface {
   ): string;
 
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "isInitialized",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "renounceOwnership",
@@ -125,10 +116,6 @@ export class MyContract extends Contract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    isInitialized(overrides?: CallOverrides): Promise<[boolean]>;
-
-    "isInitialized()"(overrides?: CallOverrides): Promise<[boolean]>;
-
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     "owner()"(overrides?: CallOverrides): Promise<[string]>;
@@ -166,10 +153,6 @@ export class MyContract extends Contract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  isInitialized(overrides?: CallOverrides): Promise<boolean>;
-
-  "isInitialized()"(overrides?: CallOverrides): Promise<boolean>;
-
   owner(overrides?: CallOverrides): Promise<string>;
 
   "owner()"(overrides?: CallOverrides): Promise<string>;
@@ -206,10 +189,6 @@ export class MyContract extends Contract {
       newValue: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
-
-    isInitialized(overrides?: CallOverrides): Promise<boolean>;
-
-    "isInitialized()"(overrides?: CallOverrides): Promise<boolean>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
@@ -255,10 +234,6 @@ export class MyContract extends Contract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    isInitialized(overrides?: CallOverrides): Promise<BigNumber>;
-
-    "isInitialized()"(overrides?: CallOverrides): Promise<BigNumber>;
-
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     "owner()"(overrides?: CallOverrides): Promise<BigNumber>;
@@ -296,10 +271,6 @@ export class MyContract extends Contract {
       newValue: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
-
-    isInitialized(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    "isInitialized()"(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
