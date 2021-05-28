@@ -5,20 +5,21 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 contract MyContract2  is Ownable ,ReentrancyGuard{
-    bool internal isInitialized;
+    bool public isInitialized;
     uint256 private value;
     uint256 public age;
- 
-  
- 
-    // Stores a new value in the contract.Dont change the initializer again,because its true in the logic contract storage.
+    bool public isInitialized2;
+    
     function initialize(uint256 newValue) public {
+       require(!isInitialized,"Already initialized"); 
         value = newValue;
       
     }
-
+    // Stores a new value in the contract.Dont change the initializer again,because its true in the logic contract storage.
     function initializeV1(uint256 _age)public{
+        require(!isInitialized2,"Already initialized"); 
         age = _age;
+        isInitialized2 = true;
     }
     
     // Reads the last stored value

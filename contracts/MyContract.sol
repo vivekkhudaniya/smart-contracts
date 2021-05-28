@@ -7,20 +7,16 @@ import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "hardhat/console.sol";
 
 contract MyContract  is Ownable ,ReentrancyGuard{
-    bool isInitialized;
+    bool public isInitialized;
     uint256 private value;
-    
- 
-    // Emitted when the stored value changes
-    event ValueChanged(uint256 newValue);
+
  
     // Stores a new value in the contract
     function initialize(uint256 newValue) public {
         require(!isInitialized,"Already initialized");
         value = newValue;
         isInitialized = true;
-        console.log(value);
-        emit ValueChanged(newValue);
+     
     }
  
     // Reads the last stored value
