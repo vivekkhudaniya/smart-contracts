@@ -12,8 +12,12 @@ contract MyContract2  is Ownable ,ReentrancyGuard{
   
  
     // Stores a new value in the contract.Dont change the initializer again,because its true in the logic contract storage.
-    function initialize(uint256 newValue,uint256 _age) public {
+    function initialize(uint256 newValue) public {
         value = newValue;
+      
+    }
+
+    function initializeV1(uint256 _age)public{
         age = _age;
     }
     
@@ -30,6 +34,12 @@ contract MyContract2  is Ownable ,ReentrancyGuard{
    // Decrement the stored age by 1
     function returnDecreasedAge() public {
         age = age - 1;
+       
+    }
+
+    // Decrement the stored age by 1
+    function getIncreaedAge() public {
+        age = age + 1;
        
     }
 } 

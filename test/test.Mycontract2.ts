@@ -33,22 +33,22 @@ describe("MyContract2_Upgradable", async () => {
 
     impl2 = await new MyContract2__factory(owner).deploy();
     myContract2 = await new MyContract2__factory(owner).attach(proxy.address);
-    const initializeData2 = impl2.interface.encodeFunctionData("initialize", [
-      43,
-      26,
-    ]);
-    await proxy.upgradeToAndCall(impl2.address, initializeData2);
+
+    await proxy.upgradeTo(impl2.address);
   });
 
   it("retrieve returns a value previously incremented", async function () {
-    expect((await myContract2.retrieve()).toString()).to.equal("43");
+    expect((await myContract2.retrieve()).toString()).to.equal("42");
     // Increment
     await myContract2.increment();
+    await myContract2.initializeV1(26);
 
     // Test if the returned value is the same one
     // Note that we need to use strings to compare the 256 bit integers
-    expect((await myContract2.retrieve()).toString()).to.equal("44");
+    expect((await myContract2.retrieve()).toString()).to.equal("43");
     await myContract2.returnDecreasedAge();
     expect((await myContract2.age()).toString()).to.equal("25");
+    await myContract2.getIncreaedAge();
+    expect((await myContract2.age()).toString()).to.equal("26");
   });
 });
