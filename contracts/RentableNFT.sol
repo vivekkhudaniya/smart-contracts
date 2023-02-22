@@ -52,7 +52,6 @@ contract RentableNFT is ERC4907,Ownable{
 
         info.user = msg.sender;
         info._expires = block.timestamp + expires * 60;
-
         
     }
 }
