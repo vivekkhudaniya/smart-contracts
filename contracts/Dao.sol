@@ -74,4 +74,43 @@ contract DAO{
         payable(msg.sender).transfer(_amount * 1 ether);    
     }
 
+    function submitProposal(string memory _description) public onlyMember{
+        proposalId++;
+        Proposal storage proposal = proposals[proposalId];
+        proposal.proposer = msg.sender;
+        proposal.description = _description;
+        proposal.votesFor = 0;
+        proposal.votesAgainst = 0;
+        proposal.executed = false;
+        proposal.isApproved = false;
+        proposal.hasVoted[msg.sender] = false;
+    }
+
+    function vote(uint _proposalId,bool _inFavor) public onlyMember{
+        Proposal storage proposal = proposals[_proposalId];
+        require(!proposal.executed,"proposal already executed");
+        require(!proposal.hasVoted[msg.sender],"Already voted on proposal");
+        if(_inFavor){
+            proposal.votesFor += shares[msg.sender];
+        }
+        else{
+            proposal.votesAgainst += shares[msg.sender];
+        }
+
+        proposal.hasVoted[msg.sender] = true;
+    }
+
+    function executeProposal(uint _proposalId) public onlyMember{
+        Proposal storage proposal = proposals[_proposalId];
+        require(!proposal.executed,"Proposal already executed");
+        require(block.timestamp > VotingPeriod,"Voting period has not expired");
+
+        if(proposal.votesFor > proposal.votesAgainst){
+            proposal.executed = true;
+            proposal.isApproved = true;
+        }else if(proposal.votesAgainst > proposal.votesFor){
+            proposal.executed = true;
+            proposal.isApproved = false;
+        }
+    }
 }
