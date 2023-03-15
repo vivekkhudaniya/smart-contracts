@@ -31,7 +31,30 @@ contract DutchAuction {
 
         nftId = _nftId;
         startAt = block.timestamp;
-        
+        endsAt = block.timestamp * DURATION ;
     }
 
+    function getPrice() public view returns(uint){
+        uint timeElpased = block.timestamp - startAt;
+        uint discount = discountRate * timeElpased;
+        return startingPrice - discount;
+    }
+
+    function buy() external payable{
+        require(block.timestamp < endsAt, "auction expired");
+
+        uint price = getPrice();
+
+        require(msg.value >= price,"ETH < price");
+
+        nft.transferFrom(seller, msg.sender, nftId);
+    
+        uint refund = msg.value - price;
+
+        if(refund > 0){
+            payable(msg.sender).transfer(refund);
+        }
+
+        selfdestruct(seller);
+    }
 }
