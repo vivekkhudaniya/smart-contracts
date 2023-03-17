@@ -12,7 +12,7 @@ contract RoboPunksNFT is ERC721,Ownable{
     uint256 public maxPerWallet;
     string internal baseTokenURI;
     address payable public withdrawWallet;
-    mapping(address => uint256) public walletMint;
+    mapping(address => uint256) public walletsMint;
 
     constructor() payable ERC721 ("RoboPunksNFT","RB"){
         minPrice = 0.2 ether;
@@ -30,4 +30,21 @@ contract RoboPunksNFT is ERC721,Ownable{
         require(_exists(_tokenURI),'Token does not exits');
         return string(abi.encodePacked(baseTokenURI, Strings.tostring(_tokenURI), ".json"));
     }
+
+    function withdraw () external onlyOwner{
+        (bool success,) = withdrawWallet.call{value: address(this).balance}("");
+        require(success , "withdraw failed");
+    }
+
+    function mint(uint256 _quantity) public payable{
+        require(msg.value == _quantity * minPrice, "wrong mint price");
+        require(totalSupply + _quantity <= maxSupply, "sold out");
+        require(walletsMint[msg.sender] + _quantity <= maxPerWallet, "exceed max wallet");
+
+        for(uint i = 0; i < _quantity ; i++){
+            uint256 newTokenId = totalSupply + 1;
+            totalSupply++;
+            _safeMint(msg.sender, newTokenId);
+        }
+    } 
 }
