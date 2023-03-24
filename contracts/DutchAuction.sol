@@ -42,13 +42,9 @@ contract DutchAuction {
 
     function buy() external payable{
         require(block.timestamp < endsAt, "auction expired");
-
         uint price = getPrice();
-
         require(msg.value >= price,"ETH < price");
-
         nft.transferFrom(seller, msg.sender, nftId);
-    
         uint refund = msg.value - price;
 
         if(refund > 0){
@@ -56,5 +52,20 @@ contract DutchAuction {
         }
 
         selfdestruct(seller);
+    }
+
+    function cancelAuction() public{
+        require(msg.sender == seller, "only seller can cancel the auction");
+        require(block.timestamp < endsAt, "Auction has expired");
+
+        require(nft.ownerOf(nftId) == address(this), "NFT has already been transferred");
+        nft.transferFrom(address(this), seller, nftId);
+        selfdestruct(seller);
+    }
+
+    function withdrawNFT() public{
+        require(msg.sender == seller, "Only the seller can withdraw the NFT");
+        require(block.timestamp >= endsAt, "Auction has not expired yet");
+        
     }
 }
