@@ -6,6 +6,10 @@ contract CryptoKid{
     error OnlyOwner();
     error ValidAddress();
 
+
+    event Deposit(address sender, uint amount , uint time);
+    event Withdrawal(address reciever, uint amount , uint time);
+
     address public owner;
 
     struct Kid{
@@ -65,6 +69,50 @@ contract CryptoKid{
             }
         }
         return 409;
+    }
+
+
+     // deposit funds into the account designated for a kid's education 
+    function deposit(address _walletAddress)
+    payable public validAddress(_walletAddress)
+    {
+        require(_walletAddress != owner, "owner cannot be a child.");
+        require(msg.value > 0, "Insufficient balance");
+        uint i = getIndex(_walletAddress);
+        require(kids[i].walletAddress == _walletAddress, "Address is not in kids array");
+        kids[i].amount += msg.value;
+        emit Deposit(msg.sender, msg.value, block.timestamp);
+    }
+    function balance() public view returns(uint){
+        uint i = getIndex(msg.sender);
+        if(msg.sender != kids[i].walletAddress){
+            revert ValidAddress();
+        }
+        return kids[i].amount;
+    }
+    // child check if they are able to withdraw
+    function availabeToWithdraw(address _walletAddress) view public returns(bool){
+        uint i = getIndex(_walletAddress);
+        if(block.timestamp > kids[i].releasedDate){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    // withdraw
+    function withdraw(address payable _walletAddress) public payable validAddress(_walletAddress) {
+        uint i = getIndex(_walletAddress);
+
+        require(kids[i].amount > 0, "Insufficient Balance");
+        require(msg.sender == kids[i].walletAddress, "only owner of the account");
+        require(block.timestamp > kids[i].releasedDate, "wait for the release time");
+        require(!kids[i].withdrawn, "funds have already been withdrawn");
+
+        kids[i].amount -= kids[i].amount;
+        _walletAddress.transfer(kids[i].amount);
+        kids[i].withdrawn = true;
+
+        emit Withdrawal(msg.sender, kids[i].amount, block.timestamp);
     }
 
 }
