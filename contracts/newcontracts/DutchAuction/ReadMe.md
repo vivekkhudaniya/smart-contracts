@@ -7,7 +7,17 @@ This smart contract is a Dutch auction contract, which allows the seller to auct
 - The contract has a built-in mechanism to prevent the seller from transferring the NFT to another address before the auction has ended.
 - The contract has a built-in mechanism to prevent the seller from calling the selfdestruct function before the auction has expired.
 - The contract has a built-in mechanism to handle refunds in case the auction is cancelled.
-- The contract has a fallback function that reverts if called with a value greater than 0, to prevent accidental overpayments.
+- The contract has a fallback functiEnglish Auction
+English auction for NFT.
+
+Auction
+Seller of NFT deploys this contract.
+Auction lasts for 7 days.
+Participants can bid by depositing ETH greater than the current highest bidder.
+All bidders can withdraw their bid if it is not the current highest bid.
+After the auction
+Highest bidder becomes the new owner of NFT.
+The seller receives the highest bid of ETH.on that reverts if called with a value greater than 0, to prevent accidental overpayments.
 - The contract has a cancelAuction() function that allows the seller to cancel the auction before the expiration, only allow the seller to call it.
 - The contract has a function to retrieve the current price of the NFT, which takes into account the time elapsed since the start of the auction and the discount rate.
 - The contract has a function allows the owner of the NFT to withdraw it from the auction if the auction was not successful.
